@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { Link as RouterLink } from 'react-router-dom';
 
+import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
 import ShopPage from './pages/shop/shop.component';
 
@@ -18,18 +19,12 @@ function App() {
 
     <Router>
       <div>
-      <Box sx={{m:2}}>
-        <Button to="/" component={RouterLink} variant="contained" sx={{mr:2}}  >Home</Button>
-        <Button to="/about" component={RouterLink} variant="contained" sx={{mr:2}} >About Us</Button>
-        <Button to="/shop" component={RouterLink} variant="contained" >Shop</Button>
-      </Box>
 
-      
+      <Header />
+
       <Routes>
         <Route exact path="/" element={<><HomePage /></>} />
         <Route exact path="/shop" element={<><ShopPage /></>} />
-
-
       </Routes>
 
       </div>
