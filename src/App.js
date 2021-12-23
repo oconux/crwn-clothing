@@ -15,23 +15,49 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-function App() {
-  return (
+import { auth } from './firebase/firebase.utils';
 
-    <Router>
-      <div>
+class App extends React.Component {
+  constructor() {
+    super();
 
-      <Header />
+    this.state = {
+      currentUser: null
+    }
+  }
 
-      <Routes>
-        <Route exact path="/" element={<><HomePage /></>} />
-        <Route exact path="/shop" element={<><ShopPage /></>} />
-        <Route exact path="/signin" element={<><SignInAndSignUpPage /></>} />
-      </Routes>
+  unsubscribeFromAuth = null;
 
-      </div>
-    </Router>
-  );
+  componentDidMount() {
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
+      this.setState({ currentUser: user});
+
+      console.log(user);
+    })
+  }
+
+  componentWillUnmount() {
+    this.unsubscribeFromAuth();
+  }
+
+  render() {
+    return (
+
+      <Router>
+        <div>
+
+        <Header currentUser={ this.state.currentUser } />
+
+        <Routes>
+          <Route exact path="/" element={<><HomePage /></>} />
+          <Route exact path="/shop" element={<><ShopPage /></>} />
+          <Route exact path="/signin" element={<><SignInAndSignUpPage /></>} />
+        </Routes>
+
+        </div>
+      </Router>
+    );
+  }
 }
 
 export default App;
