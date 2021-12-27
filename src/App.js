@@ -15,24 +15,42 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 
-import { auth } from './firebase/firebase.utils';
+import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      currentUser: null
+      currentUser: null,
+      userName: null
     }
   }
 
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged(user => {
-      this.setState({ currentUser: user});
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
 
-      console.log(user);
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+
+        userRef.onSnapshot(snapShot => {
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data()
+            }
+          });
+
+          console.log(this.state);
+
+        });
+
+      }
+
+      this.setState({currentUser: userAuth, userName: null});
+
     })
   }
 
@@ -46,7 +64,7 @@ class App extends React.Component {
       <Router>
         <div>
 
-        <Header currentUser={ this.state.currentUser } />
+        <Header currentUser={ this.state.currentUser } name={this.state.userName} />
 
         <Routes>
           <Route exact path="/" element={<><HomePage /></>} />
