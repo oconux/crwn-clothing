@@ -1,11 +1,11 @@
 import React from 'react';
 import './App.css';
 import {
-  BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
-import { Link as RouterLink } from 'react-router-dom';
+
+//import { Link as RouterLink } from 'react-router-dom';
 
 import Header from './components/header/header.component';
 import HomePage from './pages/homepage/homepage.component';
@@ -22,8 +22,7 @@ class App extends React.Component {
     super();
 
     this.state = {
-      currentUser: null,
-      userName: null
+
     }
   }
 
@@ -39,6 +38,7 @@ class App extends React.Component {
           this.setState({
             currentUser: {
               id: snapShot.id,
+              displayName: snapShot.displayName,
               ...snapShot.data()
             }
           });
@@ -61,19 +61,15 @@ class App extends React.Component {
   render() {
     return (
 
-      <Router>
-        <div>
-
-        <Header currentUser={ this.state.currentUser } name={this.state.userName} />
+      <div>
+        <Header currentUser={ this.state.currentUser }  welcomeMessage='Good to see you again, '/>
 
         <Routes>
           <Route exact path="/" element={<><HomePage /></>} />
           <Route exact path="/shop" element={<><ShopPage /></>} />
           <Route exact path="/signin" element={<><SignInAndSignUpPage /></>} />
         </Routes>
-
-        </div>
-      </Router>
+      </div>
     );
   }
 }

@@ -4,7 +4,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { auth } from '../../firebase/firebase.utils';
 import { ReactComponent as Logo } from '../../assets/crown.svg';
 
-const Header = ({ currentUser, name }) => (
+const Header = ({ currentUser, welcomeMessage }) => (
   <div className='header'>
     <RouterLink className='logo-container' to='/'>
       <Logo className='logo' />
@@ -19,7 +19,7 @@ const Header = ({ currentUser, name }) => (
         :
         <RouterLink className='option' to='/signin'>Sign In</RouterLink>
       }
-      <div className='option'>Welcome Back,  {name}</div>
+      <div className='option'>{ (currentUser) ? `${welcomeMessage} ${currentUser.displayName}` : '' } </div>
     </div>
 
   </div>
