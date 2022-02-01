@@ -18,6 +18,9 @@ import CheckoutPage from './pages/checkout/checkout.component';
 
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import ListItem from '@mui/material/ListItem';
+
 
 import { auth, createUserProfileDocument } from './firebase/firebase.utils';
 
@@ -75,8 +78,26 @@ class App extends React.Component {
           }
           />
         </Routes>
+        <Grid container spacing={2}>
+          <Grid item xs={12} sm={8} lg={6} style={{backgroundColor:'red'}}>
+            <ListItem>xs=8</ListItem>
+          </Grid>
+          <Grid item xs={12} sm={4} lg={6} style={{backgroundColor:'green'}}>
+            <ListItem>xs=4</ListItem>
+          </Grid>
+          <Grid item xs={12} sm={4} lg={6} style={{backgroundColor:'orange'}}>
+            <ListItem>xs=4</ListItem>
+          </Grid>
+          <Grid item xs={12} sm={8} lg={6} style={{backgroundColor:'yellow'}}>
+            <ListItem>xs=8</ListItem>
+          </Grid>
+        </Grid>
+        <Box>
+          <Button variant="contained">Click Me</Button>
+          <Button variant="contained">Click Me</Button>
+          <Button variant="contained">Click Me</Button>
+        </Box>
 
-        
       </div>
     );
   }
